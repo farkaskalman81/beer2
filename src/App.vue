@@ -8,7 +8,11 @@
       </div>
       <div class="goto">
         <div class="gototext">Go to:</div>
-        <input v-model="actualitem" class="inputclass" />
+        <input
+          v-bind:class="{ redborder: errorvalue }"
+          v-model="actualitem"
+          class="inputclass"
+        />
         <!-- <button
           @click="setItem(actualitem)"
         >
@@ -98,6 +102,9 @@ export default {
       set(val) {
         this.setItem(val);
       },
+    },
+    errorvalue: function () {
+      return this.$store.state.errorvalue == 1;
     },
   },
 
@@ -198,5 +205,16 @@ export default {
 }
 .arrow {
   width: 50px;
+}
+.redborder {
+  animation: blink 0.05s 200 alternate;
+}
+@keyframes blink {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: #db9936;
+  }
 }
 </style>

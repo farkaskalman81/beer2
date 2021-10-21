@@ -8,12 +8,15 @@ export default new Vuex.Store({
   state: {
     item: [],
     actualitem: 1,
+    errorvalue: 0,
   },
   mutations: {
     setItem: (state, item) => (state.item = item),
     nextItem: (state) => (state.actualitem += 1),
     prevItem: (state) => (state.actualitem -= 1),
     numberItem: (state, number) => (state.actualitem = parseInt(number)),
+    setError: (state) => (state.errorvalue = 1),
+    unsetError: (state) => (state.errorvalue = 0),
   },
   actions: {
     getItem: (context) => {
@@ -31,7 +34,10 @@ export default new Vuex.Store({
         })
         .catch((error) => {
           console.error(error);
-          alert("Valami nem OK");
+          context.commit("setError");
+          setTimeout(function () {
+            context.commit("unsetError");
+          }, 3000);
         });
     },
     nextItem: (context) => {
@@ -42,6 +48,12 @@ export default new Vuex.Store({
     },
     numberItem: (context, number) => {
       context.commit("numberItem", number);
+    },
+    setError: (context) => {
+      context.commit("setError");
+    },
+    unsetError: (context) => {
+      context.commit("unsetError");
     },
   },
   modules: {},
